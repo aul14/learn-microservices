@@ -1,34 +1,16 @@
 const apiAdapter = require('../../apiAdapter');
-const jwt = require('jsonwebtoken');
 
 const {
-    URL_SERVICE_USER,
-    JWT_SECRET,
-    JWT_SECRET_REFRESH_TOKEN,
-    JWT_ACCESS_TOKEN_EXPIRED,
-    JWT_REFRESH_TOKEN_EXPIRED
+    URL_SERVICE_USER
 } = process.env;
 
 const api = apiAdapter(URL_SERVICE_USER);
 
 module.exports = async (req, res) => {
     try {
-        const user = await api.post('./users/login', req.body);
-        const data = user.data.data;
-
-        const token = jwt.sign({ data }, JWT_SECRET, { expiresIn: JWT_ACCESS_TOKEN_EXPIRED });
-        const refreshToken = jwt.sign({ data }, JWT_SECRET_REFRESH_TOKEN, { expiresIn: JWT_REFRESH_TOKEN_EXPIRED });
-
-        // cek refresh token dari service-user refres token
-        await api.post('/refresh_tokens', { refresh_token: refreshToken, user_id: data.id });
-
-        return res.json({
-            status: 'success',
-            data: {
-                token,
-                refresh_token: refreshToken
-            }
-        })
+        const id = req.user.data.id;
+        const user = await api.put(`./users/${id}`, req.body);
+        return res.json(user.data);
     } catch (error) {
         if (error.code === 'ECONNREFUSED') {
             return res.status(500).json({

@@ -19,7 +19,16 @@ module.exports = async (req, res) => {
             })
         }
 
-        const { status, data } = error.response;
-        return res.status(status).json(data);
+        if (error.response) {
+            // If error.response exists, destructure properties from it
+            const { status, data } = error.response;
+            return res.status(status).json(data);
+        } else {
+            // If error.response is undefined, handle the error accordingly
+            return res.status(500).json({
+                status: 'error',
+                message: 'An unexpected error occurred.'
+            });
+        }
     }
 }
