@@ -16,6 +16,19 @@ class CourseController extends Controller
     {
         $courses = Course::query();
 
+        $q = $request->q;
+        $status = $request->status;
+
+        $courses->when($q, function ($query) use ($q) {
+            $q = strtolower($q);
+            return $query->where('name', 'like', "%$q%");
+        });
+
+        $courses->when($status, function ($query) use ($status) {
+            $status = strtolower($status);
+            return $query->where('status', "$status");
+        });
+
         return response()->json([
             'status' => 'success',
             'data' =>  $courses->paginate(10)
