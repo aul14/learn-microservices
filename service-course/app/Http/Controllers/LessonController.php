@@ -12,9 +12,20 @@ class LessonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $lessons = Lesson::query();
+
+        $chapterId = $request->chapter_id;
+
+        $lessons->when($chapterId, function ($query) use ($chapterId) {
+            $query->where('chapter_id', $chapterId);
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $lessons->get()
+        ]);
     }
 
     /**
@@ -68,9 +79,21 @@ class LessonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $lesson = Lesson::find($id);
+
+        if (!$lesson) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'lesson is not found!'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $lesson
+        ]);
     }
 
     /**
