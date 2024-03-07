@@ -165,8 +165,21 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $course = Course::find($id);
+        if (!$course) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'course is not found!'
+            ], 404);
+        }
+
+        $course->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'course deleted'
+        ]);
     }
 }
