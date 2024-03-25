@@ -9,8 +9,18 @@ class Course extends Model
 {
     use HasFactory;
 
-    public function myCourse()
+    public function mentor()
     {
-        return $this->hasMany(MyCourse::class);
+        return $this->belongsTo(Mentor::class);
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ImageCourse::class);
     }
 }
