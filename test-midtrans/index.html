@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-G8fuQnJ6BOmSixfK"></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
+</head>
+
+<body>
+    <button id="pay-button">Pay!</button>
+
+    <!-- @TODO: You can add the desired ID as a reference for the embedId parameter. -->
+    <div id="snap-container"></div>
+
+    <script type="text/javascript">
+        // For example trigger on button clicked, or any time you need
+        var payButton = document.getElementById('pay-button');
+        payButton.addEventListener('click', function () {
+            // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token.
+            // Also, use the embedId that you defined in the div above, here.
+            // window.snap.embed('82fd5ebf-a4a6-4a81-a1c8-943a744fb6fa', {
+            //     embedId: 'snap-container'
+            // });
+            snap.pay('0e21faba-0e8a-406f-8d84-559de89025d6')
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{
+    "name": "lenov/test-midtrans",
+    "autoload": {
+        "psr-4": {
+            "Lenov\\TestMidtrans\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "aul14",
+            "email": "rahmanaulia336@gmail.com"
+        }
+    ],
+    "require": {
+        "midtrans/midtrans-php": "^2.5"
+    }
+}
