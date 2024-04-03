@@ -78,4 +78,22 @@ class MyCourseController extends Controller
             'data' => $myCourse
         ], 201);
     }
+
+    public function createPremiumAccess(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $myCourse = MyCourse::create($data);
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $myCourse
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 400);
+        }
+    }
 }
