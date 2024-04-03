@@ -20,9 +20,21 @@ class OrderController extends Controller
         return $snapUrl;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index(Request $request)
+    {
+        $userId = $request->user_id;
+        $orders = Order::query();
+
+        $orders->when($userId, function ($query) use ($userId) {
+            return $query->where('user_id', $userId);
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $orders->get()
+        ]);
+    }
+
     public function create(Request $request)
     {
         try {
