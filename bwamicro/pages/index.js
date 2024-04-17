@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -12,6 +13,10 @@ export default function Home() {
       <main>
         <h1>Saya Halaman utama</h1>
       </main>
+
+      <Link href="/random" legacyBehavior>
+        <a>Bring me to random fetch page</a>
+      </Link>
     </div>
   );
 }
